@@ -1,0 +1,3 @@
+De dependencies staan in deze file. We moeten zelf geen packages downloaden en toevoegen aan ons project. Als we ze hier definieren zullen ze automatisch gedownload worden. De versie zal ook de versie zijn die we hier definieren.
+
+ext.kotlin_version is the version of kotlin that is used. We define a version so our app doesn't break when the version is updated. Once we updated the version in our dev environment and we ran all tests to verify if everything is still working as it should, we can upgrade the version in production.
