@@ -1,0 +1,6 @@
+We openen activity_main.xml en voegen een TextView toe
+We geven het een passende id
+
+In de onCreate voegen we toe:
+textViewTest.text = "testing"
+We kunnen dit on runtime aanpassen door op de bliksem te drukken
