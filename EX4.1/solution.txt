@@ -1,0 +1,2 @@
+De applicatie geeft build-errors als we het id verwijderen. Dit komt doordat we in MainActivity.kt verwijzen naar dit ID. 
+Wanneer we de applicatie sluiten en opnieuw opstarten merken we dat de gegevens die we origineel ingegeven hadden opnieuw verschijnen. Ze zullen dus ergens gepersisteerd zijn op het toestel.
