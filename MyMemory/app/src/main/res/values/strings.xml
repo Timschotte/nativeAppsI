@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MyMemory</string>
+    <string name="create_memory">Create memory</string>
+    <string name="find_memory">Find memory</string>
+    <string name="quote">Quote</string>
 </resources>
