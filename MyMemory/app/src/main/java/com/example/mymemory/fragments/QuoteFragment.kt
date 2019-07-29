@@ -7,8 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 
 import com.example.mymemory.R
+import com.example.mymemory.databinding.FragmentQuoteBinding
+import com.example.mymemory.ui.QuoteViewModel
 import kotlinx.android.synthetic.main.fragment_quote.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +36,11 @@ class QuoteFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    private lateinit var viewModel: QuoteViewModel
+
+
+    private lateinit var binding: FragmentQuoteBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,7 +54,14 @@ class QuoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quote, container, false)
+        //return inflater.inflate(R.layout.fragment_quote, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_quote, container, false)
+        val view = binding.root
+
+        viewModel = ViewModelProviders.of(activity!!).get(QuoteViewModel::class.java)
+        binding.quoteViewModel = viewModel
+        binding.setLifecycleOwner(activity)
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event

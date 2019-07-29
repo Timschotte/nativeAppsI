@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -18,8 +21,14 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled = true
+    }
+    kapt {
+        generateStubs = true
     }
 }
 
@@ -34,5 +43,49 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+
+
+    //OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
+
+
+    // LiveData & ViewModel
+    implementation "android.arch.lifecycle:extensions:$versions.architecture"
+
+    // Data binding
+    annotationProcessor "com.android.databinding:compiler:3.1.4"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rx"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+
+    implementation "com.squareup.moshi:moshi-kotlin:$versions.moshi"
+    //implementation "se.ansman.kotshi:api:$versions.kotshi"
+    //implementation "se.ansman.kotshi:compiler:$versions.kotshi"
+
+    // LiveData & ViewModel
+    implementation "android.arch.lifecycle:extensions:$versions.architecture"
+
+    // Adds libraries defining annotations to only the compile classpath.
+    implementation "com.google.dagger:dagger:$versions.dagger"
+    implementation "com.google.dagger:dagger-android-support:$versions.dagger"
+
+    // Adds the annotation processor dependency to the annotation processor classpath.
+    //Android Studio by default will not allow you to navigate to generated Dagger 2
+    // code as legitimate classes because they are not normally added to the source path.
+    // Adding the annotationProcessor plugin will add these files into the IDE classpath
+    // and enable you to have more visibility.
+    annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger"
+
+    //okhttp profiler for better debugging
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.5'
 
 }
