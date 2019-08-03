@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">MyMemory</string>
     <string name="create_memory">Create memory</string>
-    <string name="find_memory">Find memory</string>
+    <string name="memories">My memories</string>
     <string name="quote">Quote</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_memory_detail">My memories</string>
 </resources>

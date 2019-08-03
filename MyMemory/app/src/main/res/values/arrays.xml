@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="quoteText">
+        <item>Do not worry if you have built your castles in the air. They are where they should be. Now put the foundations under them.</item>
+        <item>Our words are buttressed by our deeds, and our deeds are inspired by our convictions.</item>
+    </string-array>
+    <string-array name="length">
+        <item>122</item>
+        <item>85</item>
+    </string-array>
+    <string-array name="author">
+        <item>Henry David Thoreau</item>
+        <item>Theodore Hesburgh</item>
+    </string-array>
+    <string-array name="tags">
+        <item>dreams</item>
+        <item>conviction</item>
+    </string-array>
+    <string-array name="category">
+        <item>inspire</item>
+        <item>inspire</item>
+    </string-array>
+    <string-array name="date">
+        <item>2016-11-21</item>
+        <item>2019-08-03</item>
+    </string-array>
+    <string-array name="title">
+        <item>Inspiring quote of the day</item>
+        <item>Inspiring quote of the day</item>
+    </string-array>
+    <string-array name="id">
+        <item>mYpH8syTM8rf8KFORoAJmQeF</item>
+        <item>abOiOZ1mvAntbk4JjR2lvweF</item>
+    </string-array>
+    <string-array name="memoryText">
+        <item>Today I worked for school</item>
+        <item>Today I chilled out</item>
+    </string-array>
+    <string-array name="memoryTitle">
+        <item>Working on the future</item>
+        <item>Relaxing times</item>
+    </string-array>
+</resources>

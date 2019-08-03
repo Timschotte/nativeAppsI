@@ -3,6 +3,7 @@ package com.example.mymemory.model
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 class QuoteResource {
     @Parcelize
@@ -15,7 +16,7 @@ class QuoteResource {
         @field:Json(name = "date") val date: String,
         @field:Json(name = "title") val title: String,
         @field:Json(name = "id") val id: String
-    ) : Parcelable
+    ) : Parcelable, Serializable
 
     @Parcelize
     data class Success(

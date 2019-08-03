@@ -17,4 +17,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, QuoteActivity::class.java)
         startActivity(intent)
     }
+
+    fun launchMemoryListActivity(view: View) {
+        val intent = Intent(this, MemoryListActivity::class.java)
+        startActivity(intent)
+    }
 }
