@@ -8,12 +8,12 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.example.mymemory"
-        minSdkVersion 15
-        targetSdkVersion 29
+        minSdkVersion 19
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -87,5 +87,6 @@ dependencies {
 
     //okhttp profiler for better debugging
     implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.5'
+
 
 }
