@@ -53,7 +53,7 @@ class MemoryDetailFragment : Fragment() {
         // The let construct calls the specified function block with this value as its argument
         // and returns its result.
         memory.let {
-            rootView.date.text = it.quote.date
+            rootView.date.text = it.date
             rootView.title.text = it.title
         }
         return rootView

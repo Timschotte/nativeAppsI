@@ -3,6 +3,7 @@ package com.example.mymemory.ui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.mymemory.base.BaseViewModel
+import com.example.mymemory.model.Quote
 import com.example.mymemory.model.QuoteResource
 import com.example.mymemory.network.QuoteApi
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -55,7 +56,7 @@ class QuoteViewModel : BaseViewModel() {
         //Logger.e(error.message!!)
     }
 
-    private fun onRetrieveQuoteSucces(result: QuoteResource.Quote) {
+    private fun onRetrieveQuoteSucces(result: Quote) {
         quoteText.value = result.quote
 
     }

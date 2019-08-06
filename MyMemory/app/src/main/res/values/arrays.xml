@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- QUOTE OBJECT -->
     <string-array name="quoteText">
         <item>Do not worry if you have built your castles in the air. They are where they should be. Now put the foundations under them.</item>
         <item>Our words are buttressed by our deeds, and our deeds are inspired by our convictions.</item>
@@ -31,6 +32,11 @@
     <string-array name="id">
         <item>mYpH8syTM8rf8KFORoAJmQeF</item>
         <item>abOiOZ1mvAntbk4JjR2lvweF</item>
+    </string-array>
+    <!-- MEMORY OBJECT -->
+    <string-array name="memoryID">
+        <item>0</item>
+        <item>1</item>
     </string-array>
     <string-array name="memoryText">
         <item>Today I worked for school</item>

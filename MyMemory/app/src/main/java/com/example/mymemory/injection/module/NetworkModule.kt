@@ -42,10 +42,6 @@ object NetworkModule {
             this.addInterceptor(OkHttpProfilerInterceptor())
         }.build()
 
-
-
-
-
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)

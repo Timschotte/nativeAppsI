@@ -7,21 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymemory.R
 import com.example.mymemory.fragments.MemoryDetailFragment
 import com.example.mymemory.model.Memory
-import com.example.mymemory.model.QuoteResource
+import com.example.mymemory.model.Quote
+import com.example.mymemory.persistence.MemoryRepository
+import com.example.mymemory.ui.MemoryViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_memory_list.*
 import kotlinx.android.synthetic.main.memory_list.*
 import kotlinx.android.synthetic.main.memory_list_content.view.*
+import javax.inject.Inject
 
 class MemoryListActivity : AppCompatActivity(){
     private var twoPane: Boolean = false
 
-    private var memories: List<Memory>? = null
+    //private var memories: List<Memory>? = null
+    private lateinit var memoryViewModel: MemoryViewModel
+
+    //@Inject
+    //lateinit var memoryRepository: MemoryRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +48,18 @@ class MemoryListActivity : AppCompatActivity(){
             twoPane = true
         }
 
+        //instead of providing the static list in the constructor, we observe the liveData-list
+        var adapter = SimpleItemRecyclerViewAdapter(this, twoPane)
+
+        memory_list.adapter = adapter
+        memory_list.layoutManager = LinearLayoutManager(this)
+
+        memoryViewModel = ViewModelProviders.of(this).get(MemoryViewModel::class.java)
+
+        memoryViewModel.getAllMemories().observe(this, Observer<List<Memory>> {
+            adapter.submitList(it)
+        })
+
     }
     /**
      * Starts the Activity
@@ -47,15 +70,15 @@ class MemoryListActivity : AppCompatActivity(){
     override fun onStart() {
         super.onStart()
 
-        memories = createMemories()
+        //memories = createMemories()
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        memory_list.adapter = SimpleItemRecyclerViewAdapter(this, memories!!, twoPane)
-        memory_list.layoutManager = LinearLayoutManager(this)
+
+
     }
 
     private fun createMemories(): List<Memory> {
@@ -72,10 +95,11 @@ class MemoryListActivity : AppCompatActivity(){
         val ids = resources.getStringArray(R.array.id)
         val memoryTexts = resources.getStringArray(R.array.memoryText)
         val memoryTitles = resources.getStringArray(R.array.memoryTitle)
+        val memoryIDs = resources.getStringArray(R.array.memoryID)
 
         for (i in 0 until quoteTexts.size) {
-            val theQuote = QuoteResource.Quote(quoteTexts[i], lengths[i].toInt(), authors[i], listOf(tags[i]), categories[i], dates[i], titles[i], ids[i])
-            val theMemory = Memory(memoryTexts[i], theQuote, memoryTitles[i])
+            val theQuote = Quote(quoteTexts[i], lengths[i].toInt(), authors[i], listOf(tags[i]), categories[i], dates[i], titles[i], ids[i])
+            val theMemory = Memory(memoryIDs[i], memoryTexts[i], theQuote.date, memoryTitles[i])
             memoryList.add(theMemory)
         }
         return memoryList
@@ -125,16 +149,28 @@ class MemoryListActivity : AppCompatActivity(){
      ***********************************************************************************************
      */
     class SimpleItemRecyclerViewAdapter(private val parentActivity: MemoryListActivity,
-                                        private val memories: List<Memory>,
                                         private val twoPane: Boolean) :
-        RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
+        ListAdapter<Memory, SimpleItemRecyclerViewAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+        companion object {
+            private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Memory>() {
+                override fun areItemsTheSame(oldItem: Memory, newItem: Memory): Boolean {
+                    return oldItem.id == newItem.id
+                }
+
+                override fun areContentsTheSame(oldItem: Memory, newItem: Memory): Boolean {
+                    return oldItem.memoryText == newItem.memoryText && oldItem.date == newItem.date
+                            && oldItem.title == newItem.title
+                }
+            }
+        }
 
         private val onClickListener: View.OnClickListener
 
         init {
             onClickListener = View.OnClickListener { v ->
                 // Every view has a tag that can be used to store data related to that view
-                // Here each item in the RecyclerView keeps a reference to the comic it represents.
+                // Here each item in the RecyclerView keeps a reference to the Memory it represents.
                 // This allows us to reuse a single listener for all items in the list
                 val item = v.tag as Memory
                 if (twoPane) {
@@ -152,16 +188,14 @@ class MemoryListActivity : AppCompatActivity(){
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val memory = memories[position]
-            holder.name.text = memory.quote.date
+            val memory = getItem(position)
+            holder.name.text = memory.date
 
             with(holder.itemView) {
                 tag = memory // Save the memory represented by this view
                 setOnClickListener(onClickListener)
             }
         }
-
-        override fun getItemCount() = memories.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val name: TextView = view.listname
