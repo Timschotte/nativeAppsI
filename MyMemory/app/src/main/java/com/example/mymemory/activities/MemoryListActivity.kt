@@ -152,6 +152,7 @@ class MemoryListActivity : AppCompatActivity(){
                                         private val twoPane: Boolean) :
         ListAdapter<Memory, SimpleItemRecyclerViewAdapter.ViewHolder>(DIFF_CALLBACK) {
 
+        //we use a ListAdapter instead of a normal adapter so we don't neem to update the entire list everytime.
         companion object {
             private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Memory>() {
                 override fun areItemsTheSame(oldItem: Memory, newItem: Memory): Boolean {
@@ -188,8 +189,13 @@ class MemoryListActivity : AppCompatActivity(){
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val memory = getItem(position)
-            holder.name.text = memory.date
+            //get the memory
+            val memory: Memory = getItem(position)
+
+            //fill the layout with data
+            holder.title.text = memory.title
+            holder.memoryText.text = memory.memoryText
+            holder.date.text = memory.date
 
             with(holder.itemView) {
                 tag = memory // Save the memory represented by this view
@@ -198,7 +204,9 @@ class MemoryListActivity : AppCompatActivity(){
         }
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val name: TextView = view.listname
+            val title: TextView = view.title
+            val date: TextView = view.date
+            val memoryText: TextView = view.memoryText
         }
     }
 }

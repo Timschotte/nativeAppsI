@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -7,17 +7,31 @@
         android:layout_margin="@dimen/recycler_layout_spacing">
 
     <TextView
-            android:id="@+id/listname"
-            style="@style/TextAppearance.AppCompat.Subhead.Inverse"
-            android:layout_width="match_parent"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/blue_grey_800_50p"
-            android:minHeight="@dimen/recycler_item_footer_height_min"
-            android:paddingLeft="@dimen/recycler_item_footer_padding"
-            android:paddingTop="@dimen/recycler_item_footer_padding"
-            android:paddingRight="@dimen/recycler_item_footer_padding"
-            android:paddingBottom="@dimen/recycler_item_footer_padding"
+            android:layout_alignParentStart="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="@tools:sample/full_names"/>
 
-</FrameLayout>
+    <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_toStartOf="@id/title"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="@tools:sample/date/ddmmyy"/>
+
+    <TextView
+            android:id="@+id/memoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="@tools:sample/lorem/random"/>
+
+</RelativeLayout>
