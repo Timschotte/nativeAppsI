@@ -2,17 +2,13 @@ package com.example.mymemory.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.mymemory.R
 import com.example.mymemory.fragments.MemoryDetailFragment
 import com.example.mymemory.model.Memory
@@ -23,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_memory_list.*
 import kotlinx.android.synthetic.main.memory_list.*
 import kotlinx.android.synthetic.main.memory_list_content.view.*
+import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 class MemoryListActivity : AppCompatActivity(){
@@ -60,7 +57,53 @@ class MemoryListActivity : AppCompatActivity(){
             adapter.submitList(it)
         })
 
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT.or(ItemTouchHelper.RIGHT)) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                doAsync{
+                    memoryViewModel.deleteMemory(adapter.getMemory(viewHolder.adapterPosition))
+                }
+                Toast.makeText(baseContext, "Memory Removed!", Toast.LENGTH_LONG).show()
+            }
+        }
+        ).attachToRecyclerView(memory_list)
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.memory_list_menu, menu)
+        //true means it will be displayed
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.delete_all_memories -> {
+                doAsync {
+                    memoryViewModel.deleteAllMemories()
+                }
+                Toast.makeText(baseContext, "All memories deleted!", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.load_sample_memories -> {
+                createMemories()
+                Toast.makeText(baseContext, "Sample memories loaded!", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+
     /**
      * Starts the Activity
      * - Allocate resources
@@ -69,8 +112,6 @@ class MemoryListActivity : AppCompatActivity(){
      */
     override fun onStart() {
         super.onStart()
-
-        //memories = createMemories()
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddMemoryActivity::class.java).apply {
@@ -82,9 +123,7 @@ class MemoryListActivity : AppCompatActivity(){
 
     }
 
-    private fun createMemories(): List<Memory> {
-        val memoryList = mutableListOf<Memory>()
-
+    private fun createMemories(){
         val resources = applicationContext.resources
         val quoteTexts = resources.getStringArray(R.array.quoteText)
         val lengths = resources.getStringArray(R.array.length)
@@ -101,9 +140,10 @@ class MemoryListActivity : AppCompatActivity(){
         for (i in 0 until quoteTexts.size) {
             val theQuote = Quote(quoteTexts[i], lengths[i].toInt(), authors[i], listOf(tags[i]), categories[i], dates[i], titles[i], ids[i])
             val theMemory = Memory(memoryIDs[i], memoryTexts[i], theQuote.date, memoryTitles[i])
-            memoryList.add(theMemory)
+            doAsync {
+                memoryViewModel.insert(theMemory)
+            }
         }
-        return memoryList
     }
 
 
@@ -202,6 +242,11 @@ class MemoryListActivity : AppCompatActivity(){
                 tag = memory // Save the memory represented by this view
                 setOnClickListener(onClickListener)
             }
+        }
+
+        //we create this function so we can pass the memory to the viewmodel to delete it
+        fun getMemory(position: Int): Memory{
+            return getItem(position)
         }
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

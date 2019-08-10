@@ -27,5 +27,13 @@ class MemoryViewModel : ViewModel(){
         return memoryRepository.getAllMemories()
     }
 
+    fun deleteMemory(memory: Memory){
+        return memoryRepository.delete(memory)
+    }
+
+    fun deleteAllMemories(){
+        return memoryRepository.deleteAllMemories()
+    }
+
 
 }
