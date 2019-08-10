@@ -32,7 +32,7 @@ class MemoryDetailFragment : Fragment() {
 
         //We only allow constructing the fragment through newInstance
         // so we can force non-null arguments
-        arguments!!.let {
+        arguments?.let {
             if (it.containsKey(ARG_MEMORY)) {
                 // Load the comic specified by the fragment
                 // arguments.

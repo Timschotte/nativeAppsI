@@ -10,17 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.*
 import com.example.mymemory.R
+import com.example.mymemory.fragments.AddEditMemoryFragment
 import com.example.mymemory.fragments.MemoryDetailFragment
 import com.example.mymemory.model.Memory
 import com.example.mymemory.model.Quote
-import com.example.mymemory.persistence.MemoryRepository
 import com.example.mymemory.ui.MemoryViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_memory_list.*
 import kotlinx.android.synthetic.main.memory_list.*
 import kotlinx.android.synthetic.main.memory_list_content.view.*
 import org.jetbrains.anko.doAsync
-import javax.inject.Inject
 
 class MemoryListActivity : AppCompatActivity(){
     private var twoPane: Boolean = false
@@ -114,7 +112,7 @@ class MemoryListActivity : AppCompatActivity(){
         super.onStart()
 
         fab.setOnClickListener { view ->
-            val intent = Intent(this, AddMemoryActivity::class.java).apply {
+            val intent = Intent(this, AddEditMemoryActivity::class.java).apply {
             }
             startActivity(intent)
         }
@@ -156,7 +154,7 @@ class MemoryListActivity : AppCompatActivity(){
         super.onStop()
 
         fab.setOnClickListener(null)
-        memory_list.adapter = null
+        //memory_list.adapter = null
     }
 
     /**
@@ -164,8 +162,8 @@ class MemoryListActivity : AppCompatActivity(){
      * This function is only called in portrait mode.
      */
     private fun startNewActivityForDetail(item: Memory) {
-        val intent = Intent(this, MemoryDetailActivity::class.java).apply {
-            putExtra(MemoryDetailFragment.ARG_MEMORY, item)
+        val intent = Intent(this, AddEditMemoryActivity::class.java).apply {
+            putExtra(AddEditMemoryFragment.ARG_MEMORY, item)
         }
         startActivity(intent)
     }

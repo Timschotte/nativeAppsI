@@ -24,7 +24,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class AddMemoryFragment : Fragment() {
+class AddEditMemoryFragment : Fragment() {
+
+    /**
+     * The memory this fragment is representing
+     */
+    private lateinit var memory: Memory
 
     private lateinit var memoryViewModel: MemoryViewModel
 
@@ -49,6 +54,26 @@ class AddMemoryFragment : Fragment() {
 
         rootView.memoryDate.text = sdf.format(Date())
         setHasOptionsMenu(true)
+
+        arguments?.let {
+            if (it.containsKey(ARG_MEMORY)) {
+                // Load the memory specified by the fragment
+                // arguments.
+                memory = it.getSerializable(MemoryDetailFragment.ARG_MEMORY) as Memory
+                if(activity is AppCompatActivity){
+                    (activity as AppCompatActivity).supportActionBar?.setTitle("Edit Memory-item")
+                }
+                rootView.edit_text.setText(memory.memoryText)
+                rootView.edit_title.setText(memory.title)
+                rootView.memoryDate.setText(memory.date)
+            }else{
+                if(activity is AppCompatActivity){
+                    (activity as AppCompatActivity).supportActionBar?.setTitle("Add new Memory-item")
+                }
+            }
+
+        }
+
         return rootView
     }
 
@@ -74,11 +99,43 @@ class AddMemoryFragment : Fragment() {
             Toast.makeText(context, "Can not insert empty memory!", Toast.LENGTH_LONG).show()
             return
         }
-        doAsync{
-            memoryViewModel.insert(Memory(memoryText = edit_text.text.toString().trim(), title = edit_title.text.toString(), date = memoryDate.text.toString() ))
+        if(this::memory.isInitialized){
+            doAsync {
+                memoryViewModel.insert(
+                    Memory(
+                        id = memory.id,
+                        memoryText = edit_text.text.toString().trim(),
+                        title = edit_title.text.toString(),
+                        date = memoryDate.text.toString()
+                    )
+                )
+            }
+        }else{
+            doAsync{
+                memoryViewModel.insert(Memory(memoryText = edit_text.text.toString().trim(), title = edit_title.text.toString(), date = memoryDate.text.toString() ))
+            }
         }
 
 
+
+
+    }
+
+    companion object {
+        /**
+         * The fragment argument representing the item ID that this fragment
+         * represents.
+         */
+        const val ARG_MEMORY = "item_id"
+
+        fun newInstance(memory: Memory): AddEditMemoryFragment {
+            val args = Bundle()
+            args.putSerializable(ARG_MEMORY, memory)
+            val fragment = AddEditMemoryFragment()
+            fragment.arguments = args
+
+            return fragment
+        }
     }
 
 

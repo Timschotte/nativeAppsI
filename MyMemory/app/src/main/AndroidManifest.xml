@@ -12,7 +12,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activities.AddMemoryActivity">
+        <activity android:name=".activities.AddEditMemoryActivity">
         </activity>
         <activity android:name=".activities.QuoteActivity">
         </activity>
@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MemoryListActivity"/>
-        <activity android:name=".activities.MemoryDetailActivity"/>
     </application>
 
 </manifest>

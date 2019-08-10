@@ -1,10 +1,7 @@
 package com.example.mymemory.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.mymemory.model.Memory
 
 @Dao
@@ -12,7 +9,7 @@ interface MemoryDao{
     @Query("SELECT * from memory_table")
     fun getAllMemories(): LiveData<List<Memory>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(memory: Memory)
 
     @Delete
