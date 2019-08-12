@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.mymemory.App
 import com.example.mymemory.model.Memory
+import com.example.mymemory.model.Quote
 import com.example.mymemory.persistence.MemoryRepository
 import com.example.myquote.persistence.QuoteRepository
 import javax.inject.Inject
@@ -12,14 +13,14 @@ class MemoryViewModel : ViewModel(){
     @Inject
     lateinit var memoryRepository: MemoryRepository
 
-    //private var allMemories: LiveData<List<Memory>> = memoryRepository.getAllMemories()
-
+    @Inject
+    lateinit var quoteRepository: QuoteRepository
 
     init{
         App.component.inject(this)
     }
 
-    fun insert(memory: Memory){
+    fun insertMemory(memory: Memory){
         memoryRepository.insert(memory)
     }
 
@@ -33,6 +34,14 @@ class MemoryViewModel : ViewModel(){
 
     fun deleteAllMemories(){
         return memoryRepository.deleteAllMemories()
+    }
+
+    fun getQuoteForDate(quoteDate: String): Quote? {
+        return quoteRepository.getQuoteForDate(quoteDate)
+    }
+
+    fun insertQuote(quote: Quote){
+        quoteRepository.insert(quote)
     }
 
 

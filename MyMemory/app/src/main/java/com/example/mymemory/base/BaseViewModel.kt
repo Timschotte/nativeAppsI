@@ -2,6 +2,7 @@ package com.example.mymemory.base
 import androidx.lifecycle.ViewModel
 import com.example.mymemory.injection.component.DaggerViewModelInjectorComponent
 import com.example.mymemory.injection.component.ViewModelInjectorComponent
+import com.example.mymemory.injection.module.DatabaseModule
 import com.example.mymemory.injection.module.NetworkModule
 import com.example.mymemory.ui.QuoteViewModel
 

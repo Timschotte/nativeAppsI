@@ -1,7 +1,9 @@
 package com.example.mymemory.injection.module
 
+import com.example.mymemory.dao.QuoteDao
 import com.example.mymemory.network.QuoteApi
 import com.example.mymemory.utils.BASE_URL
+import com.example.myquote.persistence.QuoteRepository
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -11,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
 object NetworkModule {

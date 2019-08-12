@@ -1,11 +1,7 @@
 package com.example.mymemory.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.example.mymemory.model.Memory
+import androidx.room.*
 import com.example.mymemory.model.Quote
 
 @Dao
@@ -13,7 +9,7 @@ interface QuoteDao{
     @Query("SELECT * from quote_table")
     fun getAllQuotes(): LiveData<List<Quote>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(quote: Quote)
 
     @Delete
@@ -21,4 +17,7 @@ interface QuoteDao{
 
     @Query("DELETE FROM quote_table")
     fun deleteAllQuotes()
+
+    @Query("SELECT * from quote_table WHERE date = :quoteDate")
+    fun getQuoteForDate(quoteDate: String): Quote
 }

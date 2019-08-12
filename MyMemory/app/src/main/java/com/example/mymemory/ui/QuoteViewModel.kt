@@ -2,17 +2,19 @@ package com.example.mymemory.ui
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.mymemory.App
 import com.example.mymemory.base.BaseViewModel
 import com.example.mymemory.model.Quote
 import com.example.mymemory.model.QuoteResource
 import com.example.mymemory.network.QuoteApi
+import com.example.mymemory.persistence.MemoryRepository
+import com.example.myquote.persistence.QuoteRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class QuoteViewModel : BaseViewModel() {
-
 
     private val quoteText = MutableLiveData<String>()
 
@@ -82,6 +84,7 @@ class QuoteViewModel : BaseViewModel() {
     fun getQuoteText(): MutableLiveData<String> {
         return quoteText
     }
+
 
 
 

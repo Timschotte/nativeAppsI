@@ -7,8 +7,14 @@ import android.view.View
 import com.example.mymemory.R
 import com.example.mymemory.fragments.AddEditMemoryFragment
 import com.example.mymemory.model.Memory
-
+/**
+ * An activity representing a screen to edit or create a Memory object
+ */
 class AddEditMemoryActivity : AppCompatActivity() {
+    /**
+     * Creates the Activity
+     * - if a memory is provided on creation, the memory will be pass on to the AddEditMemory fragment
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

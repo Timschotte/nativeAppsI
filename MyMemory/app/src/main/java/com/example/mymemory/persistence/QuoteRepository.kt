@@ -27,4 +27,9 @@ class QuoteRepository(private val quoteDao: QuoteDao){
     fun getAllQuotes(): LiveData<List<Quote>> {
         return quoteDao.getAllQuotes()
     }
+
+    @WorkerThread
+    fun getQuoteForDate(quoteDate: String): Quote {
+        return quoteDao.getQuoteForDate(quoteDate)
+    }
 }

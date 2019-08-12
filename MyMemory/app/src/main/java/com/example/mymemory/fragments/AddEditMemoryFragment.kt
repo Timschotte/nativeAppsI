@@ -6,21 +6,17 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
 import com.example.mymemory.R
 import com.example.mymemory.model.Memory
+import com.example.mymemory.model.Quote
 import com.example.mymemory.ui.MemoryViewModel
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.example.mymemory.ui.QuoteViewModel
 import kotlinx.android.synthetic.main.fragment_add_memory.*
 import kotlinx.android.synthetic.main.fragment_add_memory.view.*
-import kotlinx.android.synthetic.main.memory_detail.*
 import org.jetbrains.anko.doAsync
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -33,9 +29,12 @@ class AddEditMemoryFragment : Fragment() {
 
     private lateinit var memoryViewModel: MemoryViewModel
 
+    private lateinit var quoteViewModel: QuoteViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         memoryViewModel = ViewModelProviders.of(this).get(MemoryViewModel::class.java)
+
     }
 
     /**
@@ -51,30 +50,62 @@ class AddEditMemoryFragment : Fragment() {
             (activity as AppCompatActivity).supportActionBar?.setTitle("Add new Memory-item")
         }
         val sdf = SimpleDateFormat("yyyy-MM-dd")
-
-        rootView.memoryDate.text = sdf.format(Date())
         setHasOptionsMenu(true)
 
         arguments?.let {
             if (it.containsKey(ARG_MEMORY)) {
                 // Load the memory specified by the fragment
                 // arguments.
-                memory = it.getSerializable(MemoryDetailFragment.ARG_MEMORY) as Memory
+                memory = it.getSerializable(AddEditMemoryFragment.ARG_MEMORY) as Memory
                 if(activity is AppCompatActivity){
                     (activity as AppCompatActivity).supportActionBar?.setTitle("Edit Memory-item")
                 }
                 rootView.edit_text.setText(memory.memoryText)
                 rootView.edit_title.setText(memory.title)
                 rootView.memoryDate.setText(memory.date)
-            }else{
-                if(activity is AppCompatActivity){
-                    (activity as AppCompatActivity).supportActionBar?.setTitle("Add new Memory-item")
-                }
-            }
+                doAsync {
+                    if(memoryViewModel.getQuoteForDate(memory.date) != null){
+                        rootView.quoteText.setText(memoryViewModel.getQuoteForDate(memory.date)!!.quote)
+                    }else{
+                        rootView.quoteText.setText("Quote not available")
+                    }
 
+                }
+
+            }else{
+                fillNewMemoryFields(rootView, sdf)
+            }
+        }
+        if(arguments == null){
+            fillNewMemoryFields(rootView, sdf)
         }
 
+
         return rootView
+    }
+
+    private fun fillNewMemoryFields(rootView: View, sdf: SimpleDateFormat) {
+
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity).supportActionBar?.setTitle("Add new Memory-item")
+        }
+        val todaysDate: String = sdf.format(Date())
+        rootView.memoryDate.setText(todaysDate)
+        doAsync {
+            val qotd: Quote? = memoryViewModel.getQuoteForDate(todaysDate)
+            if(qotd != null){
+                rootView.quoteText.setText(qotd.quote)
+            }else{
+                quoteViewModel = ViewModelProviders.of(this.weakRef.get()!!).get(QuoteViewModel::class.java)
+                val quoteOfTheDayObserver = Observer<String> { newQOTD ->
+                    rootView.quoteText.setText(newQOTD)
+                }
+
+                quoteViewModel.getQuoteText().observe(this.weakRef.get()!!, quoteOfTheDayObserver)
+            }
+        }
+
+
     }
 
     //create the menu so the save icon can be used
@@ -101,7 +132,7 @@ class AddEditMemoryFragment : Fragment() {
         }
         if(this::memory.isInitialized){
             doAsync {
-                memoryViewModel.insert(
+                memoryViewModel.insertMemory(
                     Memory(
                         id = memory.id,
                         memoryText = edit_text.text.toString().trim(),
@@ -112,10 +143,10 @@ class AddEditMemoryFragment : Fragment() {
             }
         }else{
             doAsync{
-                memoryViewModel.insert(Memory(memoryText = edit_text.text.toString().trim(), title = edit_title.text.toString(), date = memoryDate.text.toString() ))
+                memoryViewModel.insertMemory(Memory(memoryText = edit_text.text.toString().trim(), title = edit_title.text.toString(), date = memoryDate.text.toString() ))
             }
         }
-
+        activity?.onBackPressed()
 
 
 

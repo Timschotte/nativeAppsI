@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.*
 import com.example.mymemory.R
 import com.example.mymemory.fragments.AddEditMemoryFragment
-import com.example.mymemory.fragments.MemoryDetailFragment
 import com.example.mymemory.model.Memory
 import com.example.mymemory.model.Quote
 import com.example.mymemory.ui.MemoryViewModel
+import com.example.mymemory.ui.QuoteViewModel
 import kotlinx.android.synthetic.main.activity_memory_list.*
 import kotlinx.android.synthetic.main.memory_list.*
 import kotlinx.android.synthetic.main.memory_list_content.view.*
@@ -25,6 +25,7 @@ class MemoryListActivity : AppCompatActivity(){
 
     //private var memories: List<Memory>? = null
     private lateinit var memoryViewModel: MemoryViewModel
+    //private lateinit var quoteViewModel: QuoteViewModel
 
     //@Inject
     //lateinit var memoryRepository: MemoryRepository
@@ -50,7 +51,7 @@ class MemoryListActivity : AppCompatActivity(){
         memory_list.layoutManager = LinearLayoutManager(this)
 
         memoryViewModel = ViewModelProviders.of(this).get(MemoryViewModel::class.java)
-
+        //quoteViewModel = ViewModelProviders.of(this).get(QuoteViewModel::class.java)
         memoryViewModel.getAllMemories().observe(this, Observer<List<Memory>> {
             adapter.submitList(it)
         })
@@ -139,7 +140,8 @@ class MemoryListActivity : AppCompatActivity(){
             val theQuote = Quote(quoteTexts[i], lengths[i].toInt(), authors[i], listOf(tags[i]), categories[i], dates[i], titles[i], ids[i])
             val theMemory = Memory(memoryIDs[i], memoryTexts[i], theQuote.date, memoryTitles[i])
             doAsync {
-                memoryViewModel.insert(theMemory)
+                memoryViewModel.insertMemory(theMemory)
+                memoryViewModel.insertQuote(theQuote)
             }
         }
     }
@@ -174,7 +176,7 @@ class MemoryListActivity : AppCompatActivity(){
      * This function is only called in landscape mode.
      */
     private fun placeMemoryInDetailFragment(item: Memory) {
-        val fragment = MemoryDetailFragment.newInstance(item)
+        val fragment = AddEditMemoryFragment.newInstance(item)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.memory_detail_container, fragment)
@@ -226,6 +228,7 @@ class MemoryListActivity : AppCompatActivity(){
                 .inflate(R.layout.memory_list_content, parent, false)
             return ViewHolder(view)
         }
+
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             //get the memory
