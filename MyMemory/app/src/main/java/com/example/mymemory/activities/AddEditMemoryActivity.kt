@@ -35,10 +35,8 @@ class AddEditMemoryActivity : AppCompatActivity() {
                 detailFragment = AddEditMemoryFragment()
             }
 
-
-
             supportFragmentManager.beginTransaction()
-                .replace(R.id.add_edit_memory_fragment_container, detailFragment)
+                .replace(R.id.add_edit_memory_fragment_container, detailFragment, "AddEditMemoryFragment")
                 .commit()
         }
 

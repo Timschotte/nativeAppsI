@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class QuoteViewModel : BaseViewModel() {
 
-    private val quoteText = MutableLiveData<String>()
+    private val quoteObject = MutableLiveData<Quote>()
 
 
 
@@ -30,7 +30,6 @@ class QuoteViewModel : BaseViewModel() {
     /**
      * Indicates whether the loading view should be displayed.
      */
-    //val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
 
     /**
@@ -44,8 +43,6 @@ class QuoteViewModel : BaseViewModel() {
             .subscribeOn(Schedulers.io())
             //we like the fetched data to be displayed on the MainTread (UI)
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe{ onRetrieveQuoteStart()}
-            .doOnTerminate { onRetrieveQuoteFinish()}
             .subscribe(
                 { result -> onRetrieveQuoteSucces(result.contents.quotes.get(0)) },
                 { error -> onRetrieveQuoteError(error) }
@@ -54,23 +51,13 @@ class QuoteViewModel : BaseViewModel() {
     }
 
     private fun onRetrieveQuoteError(error: Throwable) {
-        Log.e("quoteviewmodel", "error")
-        //Logger.e(error.message!!)
+        Log.e("quoteviewmodel", error.message)
     }
 
     private fun onRetrieveQuoteSucces(result: Quote) {
-        quoteText.value = result.quote
-
+        quoteObject.value = result
     }
 
-    private fun onRetrieveQuoteFinish() {
-        //TODO spinnerlike window
-        //loadingVisibility.value = View.GONE
-    }
-
-    private fun onRetrieveQuoteStart() {
-        //loadingVisibility.value = View.VISIBLE
-    }
 
     /**
      * Disposes the subscription when the [BaseViewModel] is no longer used.
@@ -80,12 +67,9 @@ class QuoteViewModel : BaseViewModel() {
         subscription.dispose()
     }
 
-
-    fun getQuoteText(): MutableLiveData<String> {
-        return quoteText
+    fun getQuoteObject(): MutableLiveData<Quote> {
+        return quoteObject
     }
-
-
 
 
 

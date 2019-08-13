@@ -14,9 +14,9 @@
     android:id="@+id/quoteFragment"/>
     <Button
             android:text="@string/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="75dp"
             android:id="@+id/backToMainBtn" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp" android:layout_marginBottom="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:onClick="launchMainActivity"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,9 @@ import com.example.mymemory.ui.QuoteViewModel
 import dagger.Component
 import javax.inject.Singleton
 
+/**
+ * This will inject the databasecomponent into our MemoryViewModel
+ */
 @Singleton
 @Component(modules = [DatabaseModule::class])
 interface DatabaseComponent {

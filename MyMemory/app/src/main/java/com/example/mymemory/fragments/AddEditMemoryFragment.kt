@@ -16,10 +16,13 @@ import com.example.mymemory.ui.QuoteViewModel
 import kotlinx.android.synthetic.main.fragment_add_memory.*
 import kotlinx.android.synthetic.main.fragment_add_memory.view.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.onComplete
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * A fragment that displays the details of a Memory
+ */
 class AddEditMemoryFragment : Fragment() {
 
     /**
@@ -27,10 +30,20 @@ class AddEditMemoryFragment : Fragment() {
      */
     private lateinit var memory: Memory
 
+    /**
+     * The memoryViewModel to retrieve & persist our models
+     */
     private lateinit var memoryViewModel: MemoryViewModel
 
+    /**
+     * The quoteViewModel used to retrieve the quote of the day from a public API
+     */
     private lateinit var quoteViewModel: QuoteViewModel
 
+    /**
+     * This will create the fragment and initialize the memoryViewModel. We don't initialize the quoteviewModel yet,
+     * because this would result in an API-call and we only want that unless we really need to
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         memoryViewModel = ViewModelProviders.of(this).get(MemoryViewModel::class.java)
@@ -46,36 +59,44 @@ class AddEditMemoryFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_add_memory, container, false)
 
-        if(activity is AppCompatActivity){
-            (activity as AppCompatActivity).supportActionBar?.setTitle("Add new Memory-item")
-        }
+        //A simple dateformatter
         val sdf = SimpleDateFormat("yyyy-MM-dd")
+
+        //We make sure the optionsMenu is displayed on top of the screen
         setHasOptionsMenu(true)
 
+        //If 'arguments' is initialized and contains the 'ARG_MEMORY'-key, then this fragment will be used to edit a memory
         arguments?.let {
             if (it.containsKey(ARG_MEMORY)) {
                 // Load the memory specified by the fragment
                 // arguments.
-                memory = it.getSerializable(AddEditMemoryFragment.ARG_MEMORY) as Memory
+                memory = it.getSerializable(ARG_MEMORY) as Memory
+                //set the correct title for the options bar
                 if(activity is AppCompatActivity){
                     (activity as AppCompatActivity).supportActionBar?.setTitle("Edit Memory-item")
                 }
+                //fill in all the properties of the memory
                 rootView.edit_text.setText(memory.memoryText)
                 rootView.edit_title.setText(memory.title)
                 rootView.memoryDate.setText(memory.date)
+                //we retrieve the quote from the repository
                 doAsync {
                     if(memoryViewModel.getQuoteForDate(memory.date) != null){
                         rootView.quoteText.setText(memoryViewModel.getQuoteForDate(memory.date)!!.quote)
                     }else{
                         rootView.quoteText.setText("Quote not available")
+
                     }
 
                 }
 
             }else{
+                //if arguments is initialized but doesn't contain a memory, we setup the fragment to create a new Memory
                 fillNewMemoryFields(rootView, sdf)
+
             }
         }
+        //If 'arguments' isn't initialized, this fragment will be used to create a new memory
         if(arguments == null){
             fillNewMemoryFields(rootView, sdf)
         }
@@ -84,36 +105,60 @@ class AddEditMemoryFragment : Fragment() {
         return rootView
     }
 
+    /**
+     * This will initialize the view for a new memory
+     */
     private fun fillNewMemoryFields(rootView: View, sdf: SimpleDateFormat) {
-
+        //We give the optionsbar the correct title
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity).supportActionBar?.setTitle("Add new Memory-item")
         }
+        //We enter today's date
         val todaysDate: String = sdf.format(Date())
         rootView.memoryDate.setText(todaysDate)
+        //We retrieve the quote of the day, we first check if we already have today's qotd in our repository, else,
+        // we initialize the quoteViewModel and fetch if from the internet
         doAsync {
             val qotd: Quote? = memoryViewModel.getQuoteForDate(todaysDate)
-            if(qotd != null){
-                rootView.quoteText.setText(qotd.quote)
-            }else{
-                quoteViewModel = ViewModelProviders.of(this.weakRef.get()!!).get(QuoteViewModel::class.java)
-                val quoteOfTheDayObserver = Observer<String> { newQOTD ->
-                    rootView.quoteText.setText(newQOTD)
-                }
+            onComplete {
+                if(qotd != null){
+                    rootView.quoteText.setText(qotd.quote)
+                }else{
+                    rootView.quoteText.setText("Trying to retrieve the quote of the day")
+                    quoteViewModel = ViewModelProviders.of(this.weakRef.get()!!).get(QuoteViewModel::class.java)
+                    val quoteObjectObserver = Observer<Quote> { newQuote ->
+                        processQuote(newQuote, rootView)
+                    }
 
-                quoteViewModel.getQuoteText().observe(this.weakRef.get()!!, quoteOfTheDayObserver)
+                    quoteViewModel.getQuoteObject().observe(this.weakRef.get()!!, quoteObjectObserver)
+                }
             }
+
         }
 
 
     }
+    /**
+     * When we retrieve the quote, we update the textfield and add the quote to the repository
+     */
+    private fun processQuote(newQuote: Quote, rootView: View) {
+        doAsync {
+            memoryViewModel.insertQuote(newQuote)
+        }
+        rootView.quoteText.setText(newQuote.quote)
+    }
 
-    //create the menu so the save icon can be used
+    /**
+     * We load the optionsMenu, specific to this fragment
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_memory_menu, menu);
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    /**
+     * We try to save the Memory
+     */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.save_memory -> {
@@ -125,6 +170,9 @@ class AddEditMemoryFragment : Fragment() {
         }
     }
 
+    /**
+     * We try to save the memory, first we do a check if all fields are filled in, then we push it to the repository
+     */
     private fun saveMemory() {
         if (edit_title.text.toString().trim().isBlank() || edit_text.text.toString().trim().isBlank()) {
             Toast.makeText(context, "Can not insert empty memory!", Toast.LENGTH_LONG).show()
@@ -152,6 +200,9 @@ class AddEditMemoryFragment : Fragment() {
 
     }
 
+    /**
+     * Used to pass a Memory to this fragment
+     */
     companion object {
         /**
          * The fragment argument representing the item ID that this fragment

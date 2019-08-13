@@ -15,4 +15,5 @@
     <string name="save">Save</string>
     <string name="delete_all_memories">Delete All Memories</string>
     <string name="load_sample_memories">load sample memories</string>
+    <string name="back">Back</string>
 </resources>

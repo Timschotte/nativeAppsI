@@ -5,6 +5,12 @@ import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+/**
+ * Model for a QuoteResource - The model we receive from the public API
+ * @param Success
+ * @param Contents a list of quotes
+ * @param QuoteData
+ */
 class QuoteResource {
     @Parcelize
     data class Success(

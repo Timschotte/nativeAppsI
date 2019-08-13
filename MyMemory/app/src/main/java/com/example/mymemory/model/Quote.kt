@@ -11,7 +11,17 @@ import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
-
+/**
+ * Model for a Quote Object
+ * @param quote the text of the quote
+ * @param length the length of the quote
+ * @param author the author
+ * @param tags the tags
+ * @param category the category
+ * @param date the date this quote was quote of the day
+ * @param title the title
+ * @param id the id
+ */
 @Parcelize
 @Entity(tableName = "quote_table")
 data class Quote(

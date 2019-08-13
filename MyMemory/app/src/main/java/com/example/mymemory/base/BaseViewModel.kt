@@ -5,10 +5,10 @@ import com.example.mymemory.injection.component.ViewModelInjectorComponent
 import com.example.mymemory.injection.module.DatabaseModule
 import com.example.mymemory.injection.module.NetworkModule
 import com.example.mymemory.ui.QuoteViewModel
-
+/**
+ * A wrapper for our viewmodels that injects the networkdependency
+ */
 abstract class BaseViewModel : ViewModel() {
-
-
 
     private val injectorComponent: ViewModelInjectorComponent = DaggerViewModelInjectorComponent
         .builder()

@@ -20,15 +20,18 @@ import kotlinx.android.synthetic.main.memory_list.*
 import kotlinx.android.synthetic.main.memory_list_content.view.*
 import org.jetbrains.anko.doAsync
 
+/**
+ * An activity showing a list of memories. On bigger screens, some fragments are shown in the same view,
+ * else, an activity is launches to display the view
+ */
 class MemoryListActivity : AppCompatActivity(){
     private var twoPane: Boolean = false
 
-    //private var memories: List<Memory>? = null
+    /**
+     * The MemoryViewModel, used to save/delete Memories and Quotes
+     */
     private lateinit var memoryViewModel: MemoryViewModel
-    //private lateinit var quoteViewModel: QuoteViewModel
 
-    //@Inject
-    //lateinit var memoryRepository: MemoryRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,26 +79,40 @@ class MemoryListActivity : AppCompatActivity(){
 
     }
 
+    /**
+     * This will create the options menu on top of the screen
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.memory_list_menu, menu)
         //true means it will be displayed
         return true
     }
 
+    /**
+     * This will process a button pressed in the option-menu
+     */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
+            //Deletes all memories from the db and shows a message on the screen
             R.id.delete_all_memories -> {
                 doAsync {
                     memoryViewModel.deleteAllMemories()
                 }
+                if(twoPane){
+                    val fragment = supportFragmentManager.findFragmentByTag("AddEditMemoryFragment")
+                    if (fragment != null)
+                        supportFragmentManager.beginTransaction().remove(fragment).commit()
+                }
                 Toast.makeText(baseContext, "All memories deleted!", Toast.LENGTH_SHORT).show()
                 true
             }
+            //Adds some memories & quotes from the db
             R.id.load_sample_memories -> {
                 createMemories()
                 Toast.makeText(baseContext, "Sample memories loaded!", Toast.LENGTH_SHORT).show()
                 true
             }
+            //Fallback, this shouldn't do anything
             else -> {
                 super.onOptionsItemSelected(item)
             }
@@ -112,6 +129,7 @@ class MemoryListActivity : AppCompatActivity(){
     override fun onStart() {
         super.onStart()
 
+        //A listener for when we click an item in the recyclerview
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddEditMemoryActivity::class.java).apply {
             }
@@ -122,6 +140,9 @@ class MemoryListActivity : AppCompatActivity(){
 
     }
 
+    /**
+     * This will create 2 Memories and 2 quotes and add them to the db by passing them to the memoryViewModel
+     */
     private fun createMemories(){
         val resources = applicationContext.resources
         val quoteTexts = resources.getStringArray(R.array.quoteText)
@@ -156,11 +177,10 @@ class MemoryListActivity : AppCompatActivity(){
         super.onStop()
 
         fab.setOnClickListener(null)
-        //memory_list.adapter = null
     }
 
     /**
-     * Starts a new activity that will display the selected comic in more detail.
+     * Starts a new activity that will display the selected memory in more detail.
      * This function is only called in portrait mode.
      */
     private fun startNewActivityForDetail(item: Memory) {
@@ -179,7 +199,7 @@ class MemoryListActivity : AppCompatActivity(){
         val fragment = AddEditMemoryFragment.newInstance(item)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.memory_detail_container, fragment)
+            .replace(R.id.memory_detail_container, fragment, "AddEditMemoryFragment")
             .commit()
     }
 
@@ -193,7 +213,9 @@ class MemoryListActivity : AppCompatActivity(){
                                         private val twoPane: Boolean) :
         ListAdapter<Memory, SimpleItemRecyclerViewAdapter.ViewHolder>(DIFF_CALLBACK) {
 
-        //we use a ListAdapter instead of a normal adapter so we don't neem to update the entire list everytime.
+        //ListAdapter helps you to work with RecyclerViews that change the content over time.
+        // All you need to do is submit a new list. It runs the DiffUtil tool behind the scenes for you on the background thread.
+        // Then it runs the animations based on how the list has changed.
         companion object {
             private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Memory>() {
                 override fun areItemsTheSame(oldItem: Memory, newItem: Memory): Boolean {
@@ -207,6 +229,7 @@ class MemoryListActivity : AppCompatActivity(){
             }
         }
 
+        //click-listener for the items in the recyclerview
         private val onClickListener: View.OnClickListener
 
         init {
@@ -223,6 +246,7 @@ class MemoryListActivity : AppCompatActivity(){
             }
         }
 
+        //This will create the contentView
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.memory_list_content, parent, false)
@@ -230,6 +254,7 @@ class MemoryListActivity : AppCompatActivity(){
         }
 
 
+        //This will fill the items with data and set a listener
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             //get the memory
             val memory: Memory = getItem(position)
