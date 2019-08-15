@@ -13,5 +13,5 @@ Some of the topics it covers:
 - Persistence with Android Room 
 - Some espresso tests
 
-The app itself (in the map Memory) is some kind of diary app where you can store memories. A memory is coupled to a Quote of the Day, received from https://quotes.rest/
+The app itself (in the map MyMemory) is some kind of diary app where you can store memories. A memory is coupled to a Quote of the Day, received from https://quotes.rest/
 
