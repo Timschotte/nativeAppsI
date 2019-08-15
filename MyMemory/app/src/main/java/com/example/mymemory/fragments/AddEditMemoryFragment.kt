@@ -82,10 +82,14 @@ class AddEditMemoryFragment : Fragment() {
                 //we retrieve the quote from the repository
                 doAsync {
                     if(memoryViewModel.getQuoteForDate(memory.date) != null){
-                        rootView.quoteText.setText(memoryViewModel.getQuoteForDate(memory.date)!!.quote)
+                        val quote = memoryViewModel.getQuoteForDate(memory.date)!!.quote
+                        onComplete {
+                            rootView.quoteText.setText(quote)
+                        }
                     }else{
-                        rootView.quoteText.setText("Quote not available")
-
+                        onComplete {
+                            rootView.quoteText.setText("Quote not available")
+                        }
                     }
 
                 }
