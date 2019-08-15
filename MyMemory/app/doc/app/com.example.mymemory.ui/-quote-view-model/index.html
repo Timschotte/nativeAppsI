@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>QuoteViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.mymemory.ui</a>&nbsp;/&nbsp;<a href="./index.html">QuoteViewModel</a><br/>
+<br/>
+<h1>QuoteViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">QuoteViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.base/-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a></code>
+<p>This viewmodel is used to retrieve a quotemodel from a public API</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">QuoteViewModel</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>This viewmodel is used to retrieve a quotemodel from a public API</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="quote-api.html">quoteApi</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">quoteApi</span><span class="symbol">: </span><a href="../../com.example.mymemory.network/-quote-api/index.html"><span class="identifier">QuoteApi</span></a></code>
+<p>The instance of the QuoteApi class
+to get back the results of the API</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-quote-object.html">getQuoteObject</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getQuoteObject</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-cleared.html">onCleared</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCleared</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Disposes the subscription when the <a href="../../com.example.mymemory.base/-base-view-model/index.html">BaseViewModel</a> is no longer used.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

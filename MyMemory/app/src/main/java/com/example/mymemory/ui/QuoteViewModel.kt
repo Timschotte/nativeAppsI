@@ -14,8 +14,14 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+/**
+ * This viewmodel is used to retrieve a quotemodel from a public API
+ */
 class QuoteViewModel : BaseViewModel() {
 
+    /**
+     * The quote retrieved from the API
+     */
     private val quoteObject = MutableLiveData<Quote>()
 
 
@@ -26,11 +32,6 @@ class QuoteViewModel : BaseViewModel() {
      */
     @Inject
     lateinit var quoteApi : QuoteApi
-
-    /**
-     * Indicates whether the loading view should be displayed.
-     */
-
 
     /**
      * Represents a disposable resources

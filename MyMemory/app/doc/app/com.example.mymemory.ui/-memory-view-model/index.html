@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MemoryViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.mymemory.ui</a>&nbsp;/&nbsp;<a href="./index.html">MemoryViewModel</a><br/>
+<br/>
+<h1>MemoryViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">MemoryViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>This ViewModel will provide access to the memory - and quoterepository</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MemoryViewModel</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>This ViewModel will provide access to the memory - and quoterepository</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="memory-repository.html">memoryRepository</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">memoryRepository</span><span class="symbol">: </span><a href="../../com.example.mymemory.persistence/-memory-repository/index.html"><span class="identifier">MemoryRepository</span></a></code>
+<p>The memoryrepository</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="quote-repository.html">quoteRepository</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">quoteRepository</span><span class="symbol">: </span><a href="../../com.example.myquote.persistence/-quote-repository/index.html"><span class="identifier">QuoteRepository</span></a></code>
+<p>The quoterepository</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete-all-memories.html">deleteAllMemories</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteAllMemories</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Delete all memories from the repository</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delete-memory.html">deleteMemory</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteMemory</span><span class="symbol">(</span><span class="identifier" id="com.example.mymemory.ui.MemoryViewModel$deleteMemory(com.example.mymemory.model.Memory)/memory">memory</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.model/-memory/index.html"><span class="identifier">Memory</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Delete a memory from the repository</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-all-memories.html">getAllMemories</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getAllMemories</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.example.mymemory.model/-memory/index.html"><span class="identifier">Memory</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Retrieve all memories from the repository</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-quote-for-date.html">getQuoteForDate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getQuoteForDate</span><span class="symbol">(</span><span class="identifier" id="com.example.mymemory.ui.MemoryViewModel$getQuoteForDate(kotlin.String)/quoteDate">quoteDate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a><span class="symbol">?</span></code>
+<p>Retrieve a quote for a specific date</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert-memory.html">insertMemory</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">insertMemory</span><span class="symbol">(</span><span class="identifier" id="com.example.mymemory.ui.MemoryViewModel$insertMemory(com.example.mymemory.model.Memory)/memory">memory</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.model/-memory/index.html"><span class="identifier">Memory</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Insert a memory in the repositry</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert-quote.html">insertQuote</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">insertQuote</span><span class="symbol">(</span><span class="identifier" id="com.example.mymemory.ui.MemoryViewModel$insertQuote(com.example.mymemory.model.Quote)/quote">quote</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Insert a quote in the repository</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>QuoteRepository - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.myquote.persistence</a>&nbsp;/&nbsp;<a href="./index.html">QuoteRepository</a><br/>
+<br/>
+<h1>QuoteRepository</h1>
+<code><span class="keyword">class </span><span class="identifier">QuoteRepository</span></code>
+<p>This class is used to run queries for the Quote Objects</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">QuoteRepository</span><span class="symbol">(</span><span class="identifier" id="com.example.myquote.persistence.QuoteRepository$<init>(com.example.mymemory.dao.QuoteDao)/quoteDao">quoteDao</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.dao/-quote-dao/index.html"><span class="identifier">QuoteDao</span></a><span class="symbol">)</span></code>
+<p>This class is used to run queries for the Quote Objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete.html">delete</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="com.example.myquote.persistence.QuoteRepository$delete(com.example.mymemory.model.Quote)/quote">quote</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Deletes a quote from the db</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delete-all-quotes.html">deleteAllQuotes</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteAllQuotes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Deletes all quotes from the db</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-all-quotes.html">getAllQuotes</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getAllQuotes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Retrieves all quotes from the db</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-quote-for-date.html">getQuoteForDate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getQuoteForDate</span><span class="symbol">(</span><span class="identifier" id="com.example.myquote.persistence.QuoteRepository$getQuoteForDate(kotlin.String)/quoteDate">quoteDate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a></code>
+<p>Retrieves the quote for a specific date</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert.html">insert</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="identifier" id="com.example.myquote.persistence.QuoteRepository$insert(com.example.mymemory.model.Quote)/quote">quote</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.mymemory.model/-quote/index.html"><span class="identifier">Quote</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Inserts a quote in the db</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

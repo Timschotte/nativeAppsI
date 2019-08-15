@@ -7,6 +7,9 @@ import com.example.mymemory.injection.module.DatabaseModule
 import com.example.mymemory.injection.module.NetworkModule
 import javax.inject.Inject
 
+/**
+ * This is the applicationContext used in the application
+ */
 class App : Application() {
     companion object {
         lateinit var component: DatabaseComponent

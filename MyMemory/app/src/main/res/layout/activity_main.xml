@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".activities.MainActivity">
     <!--
-    TODO: link to create a memory
+    This opens a window to create a new memory
      -->
     <Button
             android:text="@string/create_memory"

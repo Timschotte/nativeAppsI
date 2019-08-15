@@ -1,0 +1,16 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.example.mymemory
+com.example.mymemory.activities
+com.example.mymemory.base
+com.example.mymemory.dao
+com.example.mymemory.fragments
+com.example.mymemory.injection.component
+com.example.mymemory.injection.module
+com.example.mymemory.model
+com.example.mymemory.network
+com.example.mymemory.persistence
+com.example.mymemory.ui
+com.example.mymemory.utils
+com.example.myquote.persistence
