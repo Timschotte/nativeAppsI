@@ -12,10 +12,11 @@
     <Button
             android:text="@string/create_memory"
             android:layout_width="200dp"
-            android:layout_height="75dp"
+            android:layout_height="85dp"
             android:id="@+id/createMemoryBtn" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
+            android:textSize="25sp"
             android:layout_marginTop="128dp" app:layout_constraintTop_toTopOf="parent"
             android:onClick="launchAddEditMemoryActivity"/>
     <!--
@@ -24,10 +25,11 @@
     <Button
             android:text="@string/memories"
             android:layout_width="200dp"
-            android:layout_height="75dp"
+            android:layout_height="85dp"
             android:id="@+id/findMemoryBtn" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:layout_marginTop="52dp"
+            android:textSize="25sp"
             app:layout_constraintTop_toBottomOf="@+id/createMemoryBtn" app:layout_constraintHorizontal_bias="0.498"
             android:onClick="launchMemoryListActivity"/>
     <!--
@@ -36,10 +38,11 @@
     <Button
             android:text="@string/quote"
             android:layout_width="200dp"
-            android:layout_height="75dp"
+            android:layout_height="85dp"
             android:id="@+id/quoteBtn" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:layout_marginTop="52dp"
+            android:textSize="25sp"
             app:layout_constraintTop_toBottomOf="@+id/findMemoryBtn" app:layout_constraintHorizontal_bias="0.498"
             android:onClick="launchQuoteActivity"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
